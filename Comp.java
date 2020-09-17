@@ -27,6 +27,8 @@ public class Comp {
 		map = new TreeMap<>();
 		String s = "";
 		tree.getNewEncoding(tree.root, map, s);
+		
+		System.out.println(map.toString());
 	}
 	
 
@@ -35,9 +37,7 @@ public class Comp {
 		for (int i = 0; i < list.length; i++) {
 			if(list[i] > 0)text+=(char)i;
 		}
-		System.out.println(text);
 		char[] dd = text.toCharArray();
-		for(char d : dd) System.out.println(d);
 		return dd;
 	}
 
@@ -47,7 +47,6 @@ public class Comp {
 		for (int i = 0; i < list.length; i++) {
 			if(list[i] > 0) size++;
 		}
-		System.out.println(size);
 		return size;
 	}
 
@@ -63,7 +62,6 @@ public class Comp {
 		
 		for (int i = 0; i < l.size(); i++) {
 			k[i] = l.get(i);
-			System.out.println(k[i]);
 		}
 		
 		return k;
@@ -95,9 +93,7 @@ public class Comp {
 			String text = new String(buffer, "UTF-8");
 			tot += map.get((int)text.charAt(0)); 
 		}	
-		System.out.println("new content " + tot);
 		BitSet bs = new BitSet(tot.length());
-		
 		int bitcounter = 0;
 		for(Character c : tot.toCharArray()) {
 		    if(c.equals('1')) {
@@ -105,7 +101,7 @@ public class Comp {
 		    }
 		    bitcounter++;
 		}
-		
+		System.out.println(bitcounter);
 		us.write(bs.toByteArray());
 	}
 
@@ -116,7 +112,6 @@ public class Comp {
 		TreeMap<Integer, String> map = new TreeMap<>();
 		s = "";
 		a.tree.getNewEncoding(a.tree.root, map, s);
-		System.out.println(map.toString());
 		a.Write("codedTest.ser");
 		
 		FileOutputStream fos = new FileOutputStream("map.ser");

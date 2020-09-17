@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +13,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
+
 public class Decomp {
 
 	TreeMap<Integer, String> map;
@@ -23,7 +26,6 @@ public class Decomp {
 		FileInputStream fis = new FileInputStream("map.ser");
 		ObjectInputStream is = new ObjectInputStream(fis);
 		map = (TreeMap<Integer, String>) is.readObject();
-		
 		reverseMap();
 		
 		System.out.println(map.toString());
@@ -48,10 +50,11 @@ public class Decomp {
 		fs.read(buff);
 	 	BitSet set = BitSet.valueOf(buff);
 	 	
-	 	System.out.println(set.length());
-	 	System.out.println(set.toString());
 	 	String binaryString = "";
-	 	for(int i = 0; i < set.length(); i++) {
+	 	
+	 	int count = 0;
+	 	System.out.println(set.length());
+	 	for(int i = 0; i <= set.length(); i++) {
 	 	    if(set.get(i)) {
 	 	        binaryString += "1";
 	 	    } else {
@@ -66,6 +69,9 @@ public class Decomp {
 	 	    }
 	 	}
 	 	
+	 	fos.close();
+	 	fs.close();
+	 	
 	 
 	
 	}
@@ -74,6 +80,11 @@ public class Decomp {
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		Decomp d = new Decomp();
 		d.writenRead();
+		
+		File f = new File("test.ser");
+		File r = new File("backtoTest.ser");
+		
+		System.out.println(FileUtils.contentEquals(f, r));
 	}
 
 }
