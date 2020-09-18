@@ -9,6 +9,7 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -16,20 +17,26 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 
 public class Decomp {
-
 	TreeMap<Integer, String> map;
 	TreeMap<String, Integer> mapReversed;
 	int numBit;
 	
+	String name;
+	
+	
+	
 	public Decomp() throws IOException, ClassNotFoundException {
 		
-		FileInputStream fis = new FileInputStream("map.ser");
+		System.out.println("Input filename of orinal file");
+		
+		Scanner scan = new Scanner(System.in);
+		name = scan.nextLine();
+		
+		
+		FileInputStream fis = new FileInputStream(name + "Map.ser");
 		ObjectInputStream is = new ObjectInputStream(fis);
 		map = (TreeMap<Integer, String>) is.readObject();
 		reverseMap();
-		
-		System.out.println(map.toString());
-		System.out.println(mapReversed.toString());
 	}
 	
 	
@@ -43,8 +50,8 @@ public class Decomp {
 
 
 	public void writenRead() throws IOException {
-		FileInputStream fs = new FileInputStream("codedTest.ser");
-		FileOutputStream fos = new FileOutputStream("backtoTest.ser");
+		FileInputStream fs = new FileInputStream(name + "Compressed.ser");
+		FileOutputStream fos = new FileOutputStream(name + "Decompressed.ser");
 	
 		byte[] buff = new byte[fs.available()];
 		fs.read(buff);
@@ -57,7 +64,7 @@ public class Decomp {
 	 	for(int i = 0; i <= set.length(); i++) {
 	 	    if(set.get(i)) {
 	 	        binaryString += "1";
-	 	    } else {
+	 	    } else { 
 	 	        binaryString += "0";
 	 	    }
 	 	    
@@ -81,10 +88,10 @@ public class Decomp {
 		Decomp d = new Decomp();
 		d.writenRead();
 		
-		File f = new File("test.ser");
-		File r = new File("backtoTest.ser");
+		File f = new File(d.name + ".ser");
+		File r = new File(d.name + "Decompressed.ser");
 		
-		System.out.println(FileUtils.contentEquals(f, r));
+		System.out.println(FileUtils.contentEquals(f, r)? "successfully decompressed": "unsuccessfully decompressed");
 	}
 
 }

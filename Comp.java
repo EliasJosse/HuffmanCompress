@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -104,17 +105,28 @@ public class Comp {
 		System.out.println(bitcounter);
 		us.write(bs.toByteArray());
 	}
+	
+	
+	public static String getFilename(String name) {
+		return name.substring(0, name.indexOf("."));
+	}
 
 	public static void main(String[] args) throws IOException {
-		Comp a = new Comp("test.ser");
+		
+		System.out.println("Input filename");
+		
+		Scanner scan = new Scanner(System.in);
+		String input = scan.nextLine();
+		
+		Comp a = new Comp(input);
 		String s = "";
 		Huffman.printCode(a.tree.root, s);
 		TreeMap<Integer, String> map = new TreeMap<>();
 		s = "";
 		a.tree.getNewEncoding(a.tree.root, map, s);
-		a.Write("codedTest.ser");
+		a.Write(getFilename(input)+"Compressed.ser");
 		
-		FileOutputStream fos = new FileOutputStream("map.ser");
+		FileOutputStream fos = new FileOutputStream(getFilename(input) + "Map.ser");
 		ObjectOutputStream os = new ObjectOutputStream(fos);
 		os.writeObject(map);
 		
